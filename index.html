@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Mitr&display=swap" rel="stylesheet"> 
+</head>
+<body>
+
+
+<div id="app">
+
+    <!-- Меню получает значение "active" в качестве класса. -->
+
+    <!-- Чтобы предотвратить "прыжки" страницы при изменении ссылки, используем модификатор "prevent" (сокращение для preventDefault). -->
+
+    <nav :class="active" @click.prevent="">
+
+        <!-- Когда происходит нажатие на ссылку, вызываем метод makeActive, определенный как js-сущность Vue. -->
+
+        <a href="#" class="chapter_1" @click="makeActive('chapter_1')">
+        What’s a version control system?</a>
+        <a href="#" class="chapter_2" @click="makeActive('chapter_2')">
+        What’s a distributed version control system?</a>
+        <a href="#" class="chapter_3" @click="makeActive('chapter_3')">Why Git?</a>
+        <a href="#" class="chapter_4" @click="makeActive('chapter_4')">What’s a repository?</a>
+        <a href="#" class="chapter_5" @click="makeActive('chapter_5')">Basic Git commands</a>
+        <a href="#" class="chapter_6" @click="makeActive('chapter_6')">Explore more Git commands</a>
+        <a href="#" class="chapter_7" @click="makeActive('chapter_7')">How GitHub fits in</a>
+        <a href="#" class="chapter_8" @click="makeActive('chapter_8')">How GitHub works</a>
+        <a href="#" class="chapter_9" @click="makeActive('chapter_9')">The GitHub flow</a>
+        <a href="#" class="chapter_10" @click="makeActive('chapter_10')">
+        Learn more about the GitHub flow</a>
+        <a href="#" class="chapter_11" @click="makeActive('chapter_11')">
+        GitHub and the command line</a>
+        <a href="#" class="chapter_12" @click="makeActive('chapter_12')">
+        Models for collaborative development</a>
+        <a href="#" class="chapter_13" @click="makeActive('chapter_13')">Learn at your own pace</a>
+    </nav>
+
+    <!-- Шаблонное значение будет заменено на значение переменной "active". Все изменения будут автоматически отражены на странице. -->
+
+    <div class="article_container">
+
+
+        <div v-if="active == ''">
+            <h1>Hi, I'm Git Handbook</h1>
+            <p class="greeting">Ask me something!</p>
+
+
+            <div class="bar">
+                <!-- Создает связь мужду моделью searchString model и текстовым полем -->
+
+                <input type="text" v-model="searchString" type="text" placeholder="Type here something">
+    
+
+            </div>
+
+            <div class="filter_list_container">
+                <p v-if="searchString == ''">
+                    In recent years, the popularity of git has shown explosive growth. This version control system is used by various open source projects.
+                    <br><br>
+                    Beginners are often intimidated by a large number of intricate commands and complex arguments. But for a start, all of them are not needed. You can start by learning the most commonly used commands, and then gradually expand your knowledge.
+                </p>
+                <img src="img/remotes.jpg" v-if="searchString == ''">
+                <filter_articles 
+                    v-else
+                    v-for="(item, index) in filteredArticles[0]" 
+                    :article="item" 
+                    :key="item.id"
+                    :subtitles="filteredArticles[1]" 
+                    :index="index" 
+                    @change_active="makeActive"
+                    class="title_list">
+                </filter_articles>
+            </div>
+        </div>
+
+        <articles 
+            v-for="item in articleList" 
+            v-if="active == item.id" 
+            :article="item" 
+            :key="item.id">      
+        </articles>
+
+        <video_list 
+            v-if="active == 'video'" 
+            :videos="videoList" 
+            @choose_video="makeActive">
+        </video_list>
+
+        <videoblock 
+            v-for="item in videoList" 
+            v-if="active == item.id" 
+            :item="item">
+        </videoblock>
+
+    </div>
+    <a href="#" class="search_button" @click="active = ''; searchString = ''">SEARCH</a>
+    <a href="#" class="video_button" @click="active = 'video'">Some video instructions</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
+<script type="text/javascript" src="js/videoList.js"></script>
+<script type="text/javascript" src="js/articleList.js"></script>
+<script type="text/javascript" src="js/videoblock.js"></script>
+<script type="text/javascript" src="js/videos.js"></script>
+<script type="text/javascript" src="js/articles.js"></script>
+<script type="text/javascript" src="js/filter_articles.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
