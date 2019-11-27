@@ -1,3 +1,3 @@
 # git-handbook
 
-Created with Vue.js
+Created by Vue.js
